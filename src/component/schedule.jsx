@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from "apollo-boost";
 
@@ -13,10 +14,9 @@ function Schedule({ status, type }) {
         awayTeamName,
         venue,
         matchResult,
-    	matchStatus,
         statusMessage,
-    	playerOfTheMatch,
-    	startDate
+        playerOfTheMatch,
+        startDate
       }
     }
     `;
@@ -31,7 +31,6 @@ function Schedule({ status, type }) {
       awayTeamName,
       venue,
       matchResult,
-      matchStatus,
       statusMessage,
       playerOfTheMatch,
       startDate
@@ -42,15 +41,15 @@ function Schedule({ status, type }) {
         <p className="pl4 black">{homeTeamName}</p>
         <p className="pl4 black">{awayTeamName}</p>
         <p>{matchResult}</p>
-        {playerOfTheMatch && <div className="bg-light-gray pa1">
+        {playerOfTheMatch &&  status =='"completed"' && <div className="bg-light-gray pa1">
           <p className="mb0 mt1">{playerOfTheMatch}</p>
           <p className="mt1 mb1 pv0 f7">Player of the Match</p>
         </div>}
-        {startDate && <div className="bg-light-gray pa1 center">
-          <p className="mb0 mt1">{startDate}</p>
+        {startDate && status =='"upcoming"' && <div className="bg-light-gray pa1 center">
+          <p className="mb0 mt1">{moment(parseInt(startDate)).format("MMM Do YY").toString()}</p>
           <p className="mt1 mb1 pv0 f7">start date</p>
         </div>}
-        {statusMessage && <div className="bg-light-gray pa1">
+        {statusMessage && status =='"running"' &&<div className="bg-light-gray pa1">
           <p className="mb0 mt1">{statusMessage}</p>
         </div>}
       </div>

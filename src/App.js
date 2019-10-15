@@ -7,7 +7,7 @@ const App = () => {
   const [status, setStatus] = useState('"upcoming"');
 
   return (
-    <div className="tabs mw8 center mt0">
+    <div className="tabs mw8 center mt1">
       <div className="tabs__menu flex">
         <button
           className={`tabs__menu-item w-third tc pt2 pb2 bg-animate hover-bg-white pointer ${status == '"upcoming"' && 'bg-white red'}`}
