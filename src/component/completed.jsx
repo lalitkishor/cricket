@@ -3,10 +3,10 @@ import { useQuery } from '@apollo/react-hooks';
 import { gql } from "apollo-boost";
 
 
-function Completed() {
+function Completed({status,type}) {
     const SCHEDULE_QUERY = gql`
     {
-      schedule(type: "All", status: "completed", page: 0) { 
+      schedule(type: ${type}, status: ${status}, page: 0) { 
         matchID,
         seriesName,
         homeTeamName,
@@ -21,7 +21,7 @@ function Completed() {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
 
-    return data.schedule.map(({ matchID, seriesName ,venue,homeTeamName,awayTeamName,matchResult,playerOfTheMatch}) => (
+    return Object.keys(data.schedule).length > 0 ? (data.schedule.map(({ matchID, seriesName ,venue,homeTeamName,awayTeamName,matchResult,playerOfTheMatch}) => (
       <div className ="fl-ns w-25-ns ph2" key={matchID}>
         <h3 className="bg-light-gray pa2 br2">{seriesName}</h3>
         <p className="pl2 gray">{venue}</p>
@@ -30,11 +30,11 @@ function Completed() {
         <p>{matchResult}</p>
         <div className="bg-light-gray pa1">
             <p className="mb0 mt1">{playerOfTheMatch}</p>
-            <p className="mt1 mb1 pv0 f7">Player of the Match</p>
+            { playerOfTheMatch && <p className="mt1 mb1 pv0 f7">Player of the Match</p> }
         </div>
-        
       </div>
-    ));
+    )))
+    : <div className="center">  No data found</div>
     }
 
 export default Completed;
