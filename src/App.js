@@ -1,34 +1,46 @@
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from "apollo-boost";
+import Completed from './component/completed';
 
-
-    function App() {
-      const SCHEDULE_QUERY = gql`
-    {
-      schedule(type: "All", status: "completed", page: 0) { 
-        matchID,
-        seriesName,
-        homeTeamName,
-        awayTeamName,
-        matchStatus,
-        venue,
-        matchResult,
-        statusMessage,
-    }
-    }
-    `;
-    const { loading, error, data } = useQuery(SCHEDULE_QUERY);
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error :(</p>;
-
-    return data.schedule.map(({ matchID, seriesName }) => (
-      <div key={matchID}>
-        <p>
-          {matchID}: {seriesName}
-        </p>
+const App = () => {
+  return (
+    <div className="tabs mw8 center mt0">
+      <div className="tabs__menu flex">
+        <button  className="tabs__menu-item w-third tc bg-white pt4 pb4 bg-animate hover-bg-white pointer red">UPCOMING</button>
+        <button  className="tabs__menu-item w-third tc pt4 pb4 bg-animate hover-bg-white pointer">
+          RUNNING
+        </button>
+        <button  className="tabs__menu-item w-third tc pt4 pb4 bg-animate hover-bg-white pointer">
+          COMPLETED 
+        </button>
       </div>
-    ));
-    }
+      <div className="tabs__menu flex mb5 bb b--black-20">
+        <label for="section1" className="tabs__menu-item w-third tc bg-white pt4 pb4 bg-animate hover-bg-white pointer red">ALL</label>
+        <label for="section2" className="tabs__menu-item w-third tc pt4 pb4 bg-animate hover-bg-white pointer">
+          INTERNATIONAL
+        </label>
+        <label for="section3" className="tabs__menu-item w-third tc pt4 pb4 bg-animate hover-bg-white pointer">
+          DOMESTIC  
+        </label>
+      </div>
+      <div className="tabs__content">
+        <div>
+          <div className="tabs__content__info">
+            <Completed/>
+          </div>
+        </div>
+        <div>
+          <div className="tabs__content__info">
+           
+          </div>
+        </div>
+        <div>
 
-export default App;
+          <div className="tabs__content__info">
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+export default App
