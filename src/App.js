@@ -1,28 +1,34 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useQuery } from '@apollo/react-hooks';
+import { gql } from "apollo-boost";
 
 
+    function App() {
+      const SCHEDULE_QUERY = gql`
+    {
+      schedule(type: "All", status: "completed", page: 0) { 
+        matchID,
+        seriesName,
+        homeTeamName,
+        awayTeamName,
+        matchStatus,
+        venue,
+        matchResult,
+        statusMessage,
+    }
+    }
+    `;
+    const { loading, error, data } = useQuery(SCHEDULE_QUERY);
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error :(</p>;
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    return data.schedule.map(({ matchID, seriesName }) => (
+      <div key={matchID}>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          {matchID}: {seriesName}
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+      </div>
+    ));
+    }
 
 export default App;
